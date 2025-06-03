@@ -12,3 +12,7 @@ out/
 .settings
 .classpath
 .factorypath
+# Frontend dependencies
+grails-app/assets/javascripts/bootstrap*
+grails-app/assets/javascripts/jquery*
+grails-app/assets/stylesheets/bootstrap*

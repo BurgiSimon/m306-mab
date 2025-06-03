@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # m306-mab
 Überblick
 Sie führen in Einzelarbeit ein IT-Projekt durch. Zur Planung und Steuerung verwenden Sie die Projektmethode "IPERKA". Informationen dazu erhalten Sie im Unterricht. Die Bewertung erfolgt analog einer IPA, Details folgen später in diesem Dokument. Das Projekt umfasst die Module 306 und 450:
@@ -34,5 +33,3 @@ Projektziele
 ## Feature asset-pipeline-grails documentation
 
 - [Grails Asset Pipeline Core documentation](https://www.asset-pipeline.com/manual/)
->>>>>>> c09279f (Initial commit of project setup)
-

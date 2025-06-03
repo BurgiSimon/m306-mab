@@ -16,3 +16,22 @@ out/
 grails-app/assets/javascripts/bootstrap*
 grails-app/assets/javascripts/jquery*
 grails-app/assets/stylesheets/bootstrap*
+
+# Grails build artifacts
+build/
+target/
+.gradle/
+
+# Frontend dependencies (should use WebJars instead)
+grails-app/assets/javascripts/bootstrap*
+grails-app/assets/javascripts/jquery*
+grails-app/assets/stylesheets/bootstrap*
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

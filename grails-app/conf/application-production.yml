@@ -1,0 +1,65 @@
+---
+dataSource:
+  pooled: true
+  jmxExport: true
+  driverClassName: com.mysql.cj.jdbc.Driver
+  dialect: org.hibernate.dialect.MySQL8Dialect
+  url: jdbc:mysql://localhost:3306/mab_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+  username: mab_user
+  password: mab_password
+  properties:
+    jmxEnabled: true
+    initialSize: 5
+    maxActive: 50
+    minIdle: 5
+    maxIdle: 25
+    maxWait: 10000
+    maxAge: 600000
+    timeBetweenEvictionRunsMillis: 5000
+    minEvictableIdleTimeMillis: 60000
+    validationQuery: SELECT 1
+    validationQueryTimeout: 3
+    validationInterval: 15000
+    testOnBorrow: true
+    testWhileIdle: true
+    testOnReturn: false
+    jdbcInterceptors: ConnectionState
+    defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+
+grails:
+  gorm:
+    autoFlush: false
+  databinding:
+    dateFormats:
+      - 'yyyy-MM-dd HH:mm:ss.S'
+      - 'yyyy-MM-dd'
+  mail:
+    host: "smtp.gmail.com"
+    port: 587
+    username: "yourusername@gmail.com"
+    password: "yourpassword"
+    props:
+      mail.smtp.auth: "true"
+      mail.smtp.starttls.enable: "true"
+
+hibernate:
+  cache:
+    queries: false
+    use_second_level_cache: false
+    use_query_cache: false
+  format_sql: false
+  show_sql: false
+  hbm2ddl:
+    auto: update
+
+server:
+  port: 8080
+
+logging:
+  config: classpath:logback-production.xml
+  level:
+    root: WARN
+    mab: INFO
+    org.hibernate: WARN
+    org.springframework: WARN
+    grails.app: INFO

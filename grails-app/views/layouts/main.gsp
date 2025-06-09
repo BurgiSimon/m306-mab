@@ -22,7 +22,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-        <g:link class="navbar-brand" controller="mAB" action="index">
+        <g:link class="navbar-brand" controller="mab" action="index">
             MAB - Mitarbeiterbeurteilung
         </g:link>
 
@@ -33,7 +33,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <g:link class="nav-link" controller="mAB" action="index">
+                    <g:link class="nav-link" controller="mab" action="index">
                         <i class="fas fa-clipboard-list"></i> MAB Verwaltung
                     </g:link>
                 </li>

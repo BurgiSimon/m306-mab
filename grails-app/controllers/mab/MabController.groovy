@@ -11,7 +11,34 @@ class MabController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond mabService.list(params), model:[mabCount: mabService.count()]
+
+        // Enhanced search functionality
+        def criteria = MAB.createCriteria()
+        def mabList = criteria.list(params) {
+            if (params.search) {
+                or {
+                    ilike("commentText", "%${params.search}%")
+                    ilike("appraiseeComment", "%${params.search}%")
+                    ilike("supervisorComment", "%${params.search}%")
+                    mabStatus {
+                        ilike("mabStatusName", "%${params.search}%")
+                    }
+                }
+            }
+            if (params.status) {
+                mabStatus {
+                    eq("id", params.status.toLong())
+                }
+            }
+            order("createDate", "desc")
+        }
+
+        def mabStatuses = MABStatus.list()
+        respond mabList, model:[
+                mabCount: mabService.count(),
+                mabStatuses: mabStatuses,
+                searchParams: params
+        ]
     }
 
     def show(Long id) {
@@ -92,16 +119,6 @@ class MabController {
         }
     }
 
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'mab.label', default: 'MAB'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
-
     def addCompetence(Long id) {
         def mab = mabService.get(id)
         if (!mab) {
@@ -123,7 +140,7 @@ class MabController {
             return
         }
 
-        // Prüfen ob Kompetenz bereits zugewiesen ist
+        // Check if competence is already assigned
         def existing = MABCompetence.findByMabAndCompetence(mab, competence)
         if (existing) {
             flash.error = "Kompetenz ist bereits zugewiesen"
@@ -144,5 +161,78 @@ class MabController {
         }
 
         redirect action: "show", id: mab.id
+    }
+
+    // New: Role management
+    def addRole(Long id) {
+        def mab = mabService.get(id)
+        if (!mab) {
+            notFound()
+            return
+        }
+
+        def roles = Role.list()
+        respond mab, model: [roles: roles]
+    }
+
+    def saveRole() {
+        def mab = MAB.get(params.mabId)
+        def role = Role.get(params.roleId)
+
+        if (!mab || !role) {
+            flash.error = "MAB oder Rolle nicht gefunden"
+            redirect action: "index"
+            return
+        }
+
+        def mabRole = new MABRole(
+                mab: mab,
+                role: role,
+                empNum: params.empNum ? Integer.parseInt(params.empNum) : null,
+                login: params.login,
+                lastName: params.lastName,
+                firstName: params.firstName,
+                mail: params.mail,
+                hasApproved: false
+        )
+
+        if (mabRole.save(flush: true)) {
+            flash.message = "Person erfolgreich zugewiesen"
+        } else {
+            flash.error = "Fehler beim Speichern der Person"
+        }
+
+        redirect action: "show", id: mab.id
+    }
+
+    // New: Workflow status update
+    def updateStatus() {
+        def mab = MAB.get(params.mabId)
+        def newStatus = MABStatus.get(params.statusId)
+
+        if (!mab || !newStatus) {
+            flash.error = "MAB oder Status nicht gefunden"
+            redirect action: "index"
+            return
+        }
+
+        mab.mabStatus = newStatus
+        if (mab.save(flush: true)) {
+            flash.message = "Status erfolgreich geändert zu: ${newStatus.mabStatusName}"
+        } else {
+            flash.error = "Fehler beim Ändern des Status"
+        }
+
+        redirect action: "show", id: mab.id
+    }
+
+    protected void notFound() {
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'mab.label', default: 'MAB'), params.id])
+                redirect action: "index", method: "GET"
+            }
+            '*'{ render status: NOT_FOUND }
+        }
     }
 }

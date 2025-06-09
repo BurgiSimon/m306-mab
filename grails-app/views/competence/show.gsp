@@ -122,7 +122,7 @@
                                         </g:else>
                                     </td>
                                     <td>
-                                        <g:link controller="mAB" action="show" id="${mabComp.mab.id}"
+                                        <g:link controller="mab" action="show" id="${mabComp.mab.id}"
                                                 class="btn btn-sm btn-outline-primary">
                                             <i class="fas fa-eye"></i>
                                         </g:link>

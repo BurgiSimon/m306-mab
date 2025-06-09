@@ -1,16 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: simon
-  Date: 6/3/25
-  Time: 10:52 AM
---%>
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="layout" content="main" />
     <g:set var="entityName" value="${message(code: 'competence.label', default: 'Competence')}" />
-    <title><g:message code="default.create.label" args="[entityName]" /></title>
+    <title><g:message code="default.edit.label" args="[entityName]" /></title>
 </head>
 <body>
 <div class="row">
@@ -18,11 +11,12 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><g:link action="index">Kompetenzkatalog</g:link></li>
-                <li class="breadcrumb-item active">Neue Kompetenz erstellen</li>
+                <li class="breadcrumb-item"><g:link action="show" id="${competence?.id}">Kompetenz ${competence?.id}</g:link></li>
+                <li class="breadcrumb-item active">Bearbeiten</li>
             </ol>
         </nav>
 
-        <h1><i class="fas fa-plus"></i> Neue Kompetenz erstellen</h1>
+        <h1><i class="fas fa-edit"></i> Kompetenz bearbeiten</h1>
 
         <g:hasErrors bean="${competence}">
             <div class="alert alert-danger">
@@ -32,7 +26,8 @@
 
         <div class="card">
             <div class="card-body">
-                <g:form action="save" class="needs-validation" novalidate="true">
+                <g:form resource="${competence}" method="PUT" class="needs-validation" novalidate="true">
+                    <g:hiddenField name="version" value="${competence?.version}" />
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -60,9 +55,8 @@
                             <div class="mb-3">
                                 <div class="form-check">
                                     <g:checkBox name="competenceActive"
-                                                value="${competence?.competenceActive != null ? competence?.competenceActive : true}"
-                                                class="form-check-input"
-                                                checked="true" />
+                                                value="${competence?.competenceActive}"
+                                                class="form-check-input" />
                                     <label class="form-check-label" for="competenceActive">
                                         Kompetenz ist aktiv
                                     </label>
@@ -73,43 +67,23 @@
 
                         <div class="col-md-6">
                             <div class="alert alert-info">
-                                <h6><i class="fas fa-info-circle"></i> Hinweise zur Kompetenz-Erstellung</h6>
+                                <h6><i class="fas fa-info-circle"></i> Hinweise zur Kompetenz-Bearbeitung</h6>
                                 <ul class="mb-0">
                                     <li><strong>Kompetenzname:</strong> Sollte aussagekräftig und eindeutig sein</li>
                                     <li><strong>Bewertungsskala:</strong> Bestimmt die verfügbaren Bewertungsoptionen</li>
                                     <li><strong>Status:</strong> Nur aktive Kompetenzen können neuen MABs zugewiesen werden</li>
                                 </ul>
                             </div>
-
-                            <div class="card">
-                                <div class="card-header">
-                                    <h6>Verfügbare Bewertungsskalen</h6>
-                                </div>
-                                <div class="card-body">
-                                    <g:if test="${ratingScales}">
-                                        <g:each in="${ratingScales}" var="scale">
-                                            <div class="mb-2">
-                                                <strong>${scale.ratingScaleName}</strong>
-                                                <div class="text-muted small">
-                                                    Bewertungen:
-                                                    <g:each in="${scale.ratings?.sort { it.sortOrder }}" var="rating" status="i">
-                                                        ${rating.ratingName}${i < scale.ratings?.size() - 1 ? ', ' : ''}
-                                                    </g:each>
-                                                </div>
-                                            </div>
-                                        </g:each>
-                                    </g:if>
-                                    <g:else>
-                                        <p class="text-muted">Keine Bewertungsskalen verfügbar.</p>
-                                    </g:else>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
                     <div class="mt-4">
-                        <g:submitButton name="create" class="btn btn-success" value="Kompetenz erstellen" />
-                        <g:link class="btn btn-secondary" action="index">Abbrechen</g:link>
+                        <g:submitButton name="update" class="btn btn-success" value="Änderungen speichern" />
+                        <g:link class="btn btn-secondary" action="show" id="${competence?.id}">Abbrechen</g:link>
+                        <g:link class="btn btn-outline-danger" action="delete" id="${competence?.id}"
+                                onclick="return confirm('Sind Sie sicher, dass Sie diese Kompetenz löschen möchten?')">
+                            <i class="fas fa-trash"></i> Löschen
+                        </g:link>
                     </div>
                 </g:form>
             </div>

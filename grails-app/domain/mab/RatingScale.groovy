@@ -4,6 +4,8 @@ class RatingScale {
     String ratingScaleName
     Integer sortOrder
 
+    static hasMany = [ratings: Rating]
+
     static constraints = {
         ratingScaleName nullable: false, blank: false, maxSize: 50
         sortOrder nullable: true

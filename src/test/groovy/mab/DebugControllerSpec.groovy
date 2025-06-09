@@ -1,9 +1,9 @@
 package mab
 
-import grails.testing.services.ServiceUnitTest
+import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
-class MabServiceSpec extends Specification implements ServiceUnitTest<MabService>{
+class DebugControllerSpec extends Specification implements ControllerUnitTest<DebugController> {
 
     def setup() {
     }

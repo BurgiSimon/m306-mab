@@ -151,8 +151,8 @@
         const competenceRatings = {
             <g:each in="${competences}" var="comp">
             '${comp.id}': [
-                <g:each in="${mab.Rating.findAllByRatingScale(comp.ratingScale)}" var="rating">
-                {id: '${rating.id}', name: '${rating.ratingName}', points: '${rating.points}'},
+                <g:each in="${comp.ratingScale.ratings?.sort { it.sortOrder }}" var="rating">
+                {id: '${rating.id}', name: '${rating.ratingName}', points: '${rating.points ?: "N/A"}'},
                 </g:each>
             ],
             </g:each>

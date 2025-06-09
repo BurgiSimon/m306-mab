@@ -4,7 +4,7 @@ import grails.testing.web.controllers.ControllerUnitTest
 import grails.validation.ValidationException
 import spock.lang.*
 
-class MABControllerSpec extends Specification implements ControllerUnitTest<MABController> {
+class MabControllerSpec extends Specification implements ControllerUnitTest<MabController> {
 
     def populateValidParams(params) {
         assert params != null
@@ -24,7 +24,7 @@ class MABControllerSpec extends Specification implements ControllerUnitTest<MABC
 
     void "Test T-001: MAB erfassen - Index action returns the correct model"() {
         given:
-        controller.mABService = Mock(MABService) {
+        controller.mABService = Mock(MabService) {
             list(_) >> []
             count() >> 0
         }
@@ -47,7 +47,7 @@ class MABControllerSpec extends Specification implements ControllerUnitTest<MABC
 
     void "Test T-001: MAB erfassen - Save action successfully persists an instance"() {
         given:
-        controller.mABService = Mock(MABService) {
+        controller.mABService = Mock(MabService) {
             save(_ as MAB) >> { MAB mab ->
                 mab.id = 1
                 return mab
@@ -68,7 +68,7 @@ class MABControllerSpec extends Specification implements ControllerUnitTest<MABC
 
     void "Test T-008: Fehlendes Pflichtfeld - Save action with invalid data"() {
         given:
-        controller.mABService = Mock(MABService) {
+        controller.mABService = Mock(MabService) {
             save(_ as MAB) >> { MAB mab ->
                 throw new ValidationException("", mab.errors)
             }
@@ -89,7 +89,7 @@ class MABControllerSpec extends Specification implements ControllerUnitTest<MABC
         given:
         def mab = new MAB()
         mab.id = 1
-        controller.mABService = Mock(MABService) {
+        controller.mABService = Mock(MabService) {
             get(1) >> mab
         }
 
@@ -104,7 +104,7 @@ class MABControllerSpec extends Specification implements ControllerUnitTest<MABC
         given:
         def mab = new MAB()
         mab.id = 1
-        controller.mABService = Mock(MABService) {
+        controller.mABService = Mock(MabService) {
             get(1) >> mab
         }
 
@@ -117,7 +117,7 @@ class MABControllerSpec extends Specification implements ControllerUnitTest<MABC
 
     void "Test T-002: MAB bearbeiten - Update action successfully persists"() {
         given:
-        controller.mABService = Mock(MABService) {
+        controller.mABService = Mock(MabService) {
             save(_ as MAB) >> { MAB mab ->
                 mab.id = 1
                 return mab
@@ -139,7 +139,7 @@ class MABControllerSpec extends Specification implements ControllerUnitTest<MABC
 
     void "Test T-003: MAB löschen - Delete action deletes an instance"() {
         given:
-        controller.mABService = Mock(MABService) {
+        controller.mABService = Mock(MabService) {
             delete(1) >> { }
         }
 
@@ -155,7 +155,7 @@ class MABControllerSpec extends Specification implements ControllerUnitTest<MABC
 
     void "Test T-010: Datenvalidierung Datum - Von-Datum später als Bis-Datum"() {
         given:
-        controller.mABService = Mock(MABService) {
+        controller.mABService = Mock(MabService) {
             save(_ as MAB) >> { MAB mab ->
                 throw new ValidationException("", mab.errors)
             }

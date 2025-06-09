@@ -7,8 +7,8 @@ class UrlMappings {
             }
         }
 
-        // Direkt zu MAB weiterleiten
-        "/"(controller: 'MAB', action: 'index')
+        // Root URL mapping - redirect to MAB controller (note: lowercase 'mAB' matches MABController)
+        "/"(controller: 'mab', action: 'index')
 
         // Error pages
         "500"(view:'/error')

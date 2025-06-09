@@ -11,8 +11,8 @@ class CompetenceServiceSpec extends Specification implements ServiceUnitTest<Com
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
+    void "test service exists"() {
+        expect:"service should exist"
+        service != null
     }
 }

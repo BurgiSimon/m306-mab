@@ -3,7 +3,7 @@ package mab
 import grails.gorm.services.Service
 
 @Service(MAB)
-interface MABService {
+interface MabService {
 
     MAB get(Serializable id)
 
@@ -13,6 +13,6 @@ interface MABService {
 
     void delete(Serializable id)
 
-    MAB save(MAB mAB)
+    MAB save(MAB mab)
 
 }

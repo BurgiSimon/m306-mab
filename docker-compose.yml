@@ -18,6 +18,8 @@ services:
     volumes:
       - ./logs:/app/logs
     restart: unless-stopped
+    networks:
+      - mab-network
 
   mab-db:
     image: mysql:8.0
@@ -36,7 +38,10 @@ services:
       timeout: 10s
       retries: 5
       interval: 30s
+      start_period: 60s
     restart: unless-stopped
+    networks:
+      - mab-network
 
   adminer:
     image: adminer:latest
@@ -47,6 +52,12 @@ services:
     depends_on:
       - mab-db
     restart: unless-stopped
+    networks:
+      - mab-network
 
 volumes:
   mab_db_data:
+
+networks:
+  mab-network:
+    driver: bridge

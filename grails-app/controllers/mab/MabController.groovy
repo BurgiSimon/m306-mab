@@ -3,19 +3,19 @@ package mab
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
-class MABController {
+class MabController {
 
-    MABService mABService
+    MabService mabService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond mABService.list(params), model:[mABCount: mABService.count()]
+        respond mabService.list(params), model:[mabCount: mabService.count()]
     }
 
     def show(Long id) {
-        respond mABService.get(id)
+        respond mabService.get(id)
     }
 
     def create() {
@@ -23,55 +23,55 @@ class MABController {
         respond new MAB(params), model: [mabStatuses: mabStatuses]
     }
 
-    def save(MAB mAB) {
-        if (mAB == null) {
+    def save(MAB mab) {
+        if (mab == null) {
             notFound()
             return
         }
 
         try {
-            mABService.save(mAB)
+            mabService.save(mab)
         } catch (ValidationException e) {
             def mabStatuses = MABStatus.list()
-            respond mAB.errors, view:'create', model: [mabStatuses: mabStatuses]
+            respond mab.errors, view:'create', model: [mabStatuses: mabStatuses]
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'mAB.label', default: 'MAB'), mAB.id])
-                redirect mAB
+                flash.message = message(code: 'default.created.message', args: [message(code: 'mab.label', default: 'MAB'), mab.id])
+                redirect mab
             }
-            '*' { respond mAB, [status: CREATED] }
+            '*' { respond mab, [status: CREATED] }
         }
     }
 
     def edit(Long id) {
-        def mab = mABService.get(id)
+        def mab = mabService.get(id)
         def mabStatuses = MABStatus.list()
         respond mab, model: [mabStatuses: mabStatuses]
     }
 
-    def update(MAB mAB) {
-        if (mAB == null) {
+    def update(MAB mab) {
+        if (mab == null) {
             notFound()
             return
         }
 
         try {
-            mABService.save(mAB)
+            mabService.save(mab)
         } catch (ValidationException e) {
             def mabStatuses = MABStatus.list()
-            respond mAB.errors, view:'edit', model: [mabStatuses: mabStatuses]
+            respond mab.errors, view:'edit', model: [mabStatuses: mabStatuses]
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'mAB.label', default: 'MAB'), mAB.id])
-                redirect mAB
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'mab.label', default: 'MAB'), mab.id])
+                redirect mab
             }
-            '*' { respond mAB, [status: OK] }
+            '*' { respond mab, [status: OK] }
         }
     }
 
@@ -81,11 +81,11 @@ class MABController {
             return
         }
 
-        mABService.delete(id)
+        mabService.delete(id)
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'mAB.label', default: 'MAB'), id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'mab.label', default: 'MAB'), id])
                 redirect action:"index", method:"GET"
             }
             '*' { render status: NO_CONTENT }
@@ -95,7 +95,7 @@ class MABController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'mAB.label', default: 'MAB'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'mab.label', default: 'MAB'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
@@ -103,7 +103,7 @@ class MABController {
     }
 
     def addCompetence(Long id) {
-        def mab = mABService.get(id)
+        def mab = mabService.get(id)
         if (!mab) {
             notFound()
             return

@@ -19,7 +19,8 @@ class MABController {
     }
 
     def create() {
-        respond new MAB(params)
+        def mabStatuses = MABStatus.list()
+        respond new MAB(params), model: [mabStatuses: mabStatuses]
     }
 
     def save(MAB mAB) {
@@ -31,7 +32,8 @@ class MABController {
         try {
             mABService.save(mAB)
         } catch (ValidationException e) {
-            respond mAB.errors, view:'create'
+            def mabStatuses = MABStatus.list()
+            respond mAB.errors, view:'create', model: [mabStatuses: mabStatuses]
             return
         }
 
@@ -45,7 +47,9 @@ class MABController {
     }
 
     def edit(Long id) {
-        respond mABService.get(id)
+        def mab = mABService.get(id)
+        def mabStatuses = MABStatus.list()
+        respond mab, model: [mabStatuses: mabStatuses]
     }
 
     def update(MAB mAB) {
@@ -57,7 +61,8 @@ class MABController {
         try {
             mABService.save(mAB)
         } catch (ValidationException e) {
-            respond mAB.errors, view:'edit'
+            def mabStatuses = MABStatus.list()
+            respond mAB.errors, view:'edit', model: [mabStatuses: mabStatuses]
             return
         }
 

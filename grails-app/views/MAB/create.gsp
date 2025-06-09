@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: simon
-  Date: 6/3/25
-  Time: 10:40 AM
---%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +31,7 @@
                             <div class="mb-3">
                                 <label for="mabStatus" class="form-label">Status <span class="text-danger">*</span></label>
                                 <g:select name="mabStatus.id"
-                                          from="${mab.MABStatus.list()}"
+                                          from="${mabStatuses}"
                                           optionKey="id"
                                           optionValue="mabStatusName"
                                           value="${mAB?.mabStatus?.id}"

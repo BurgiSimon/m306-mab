@@ -8,7 +8,7 @@ class UrlMappings {
         }
 
         // Direkt zu MAB weiterleiten
-        "/"(redirect: "/MAB/index")
+        "/"(controller: 'MAB', action: 'index')
 
         // Error pages
         "500"(view:'/error')

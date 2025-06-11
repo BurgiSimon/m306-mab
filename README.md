@@ -33,3 +33,13 @@ Projektziele
 ## Feature asset-pipeline-grails documentation
 
 - [Grails Asset Pipeline Core documentation](https://www.asset-pipeline.com/manual/)
+
+## Docker Compose
+
+To start only the database services for testing, run:
+
+```bash
+docker compose -f docker-compose-db.yml up -d
+```
+
+This launches MySQL and Adminer. Use the standard `docker-compose.yml` to start the full application.

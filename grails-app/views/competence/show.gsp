@@ -4,6 +4,7 @@
     <meta name="layout" content="main"/>
     <g:set var="entityName" value="${message(code: 'competence.label', default: 'Competence')}"/>
     <title><g:message code="default.show.label" args="[entityName]"/></title>
+<%@ page import="mab.MABCompetence" %>
 </head>
 
 <body>

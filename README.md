@@ -33,3 +33,22 @@ Projektziele
 ## Feature asset-pipeline-grails documentation
 
 - [Grails Asset Pipeline Core documentation](https://www.asset-pipeline.com/manual/)
+
+## Docker Compose
+
+To start only the database services for testing, run:
+
+```bash
+docker compose -f docker-compose-db.yml up -d
+```
+
+This launches MySQL and Adminer. Use the standard `docker-compose.yml` to start the full application.
+
+To run the Grails app locally with this MySQL instance, ensure the `production` profile is active:
+
+```bash
+docker compose up -d
+SPRING_PROFILES_ACTIVE=production ./grailsw run-app
+```
+
+Check the console output for `jdbc:mysql://` to confirm it connects to the container database.

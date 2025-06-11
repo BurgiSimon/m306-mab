@@ -50,7 +50,7 @@
         <!-- Results Summary -->
         <div class="alert alert-info">
             <g:if test="${searchParams?.search || searchParams?.status}">
-                <strong>Suchergebnisse:</strong> ${mABList?.size()} von ${mabCount} MAB-Einträgen
+                <strong>Suchergebnisse:</strong> ${mabList?.size()} von ${mabCount} MAB-Einträgen
                 <g:if test="${searchParams?.search}">
                     für "<em>${searchParams.search}</em>"
                 </g:if>
@@ -83,7 +83,7 @@
             </div>
 
             <div class="card-body">
-                <g:if test="${mABList}">
+                <g:if test="${mabList}">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover" id="mabTable">
                             <thead class="table-dark">
@@ -99,7 +99,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <g:each in="${mABList}" var="mab" status="i">
+                            <g:each in="${mabList}" var="mab" status="i">
                                 <tr class="mab-row" data-mab-id="${mab.id}">
                                     <td><span class="badge bg-secondary">${mab.id}</span></td>
                                     <td>
@@ -201,7 +201,7 @@
         </div>
 
     <!-- Statistics Card -->
-        <g:if test="${mABList}">
+        <g:if test="${mabList}">
             <div class="row mt-4">
                 <div class="col-md-3">
                     <div class="card text-white bg-primary">
@@ -215,7 +215,7 @@
                     <div class="card text-white bg-warning">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fas fa-clock"></i> In Bearbeitung</h5>
-                            <h2>${mABList?.count{it.mabStatus.mabStatusName.contains('Bewertung')} ?: 0}</h2>
+                            <h2>${mabList?.count{it.mabStatus.mabStatusName.contains('Bewertung')} ?: 0}</h2>
                         </div>
                     </div>
                 </div>
@@ -223,7 +223,7 @@
                     <div class="card text-white bg-info">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fas fa-users"></i> MA-Gespräch</h5>
-                            <h2>${mABList?.count{it.mabStatus.mabStatusName.contains('Gespräch')} ?: 0}</h2>
+                            <h2>${mabList?.count{it.mabStatus.mabStatusName.contains('Gespräch')} ?: 0}</h2>
                         </div>
                     </div>
                 </div>
@@ -231,7 +231,7 @@
                     <div class="card text-white bg-success">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fas fa-check"></i> Abgeschlossen</h5>
-                            <h2>${mABList?.count{it.mabStatus.mabStatusName.contains('abgeschlossen')} ?: 0}</h2>
+                            <h2>${mabList?.count{it.mabStatus.mabStatusName.contains('abgeschlossen')} ?: 0}</h2>
                         </div>
                     </div>
                 </div>
